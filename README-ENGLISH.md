@@ -1,6 +1,6 @@
 # ATM Simulator
 
-This project simulates an ATM with basic functionalities for withdrawing, depositing, and generating a statement. The code is written in Python and is designed to manage cash transactions and provide a statement of transactions performed.
+This project simulates an ATM with basic functionalities for withdrawing, depositing, and generating a statement. The code is written in Python and is designed to manage cash transactions and provide a statement of transactions performed. The execution of the program is in brazilian portuguese (PT-BR).
 
 ## Features
  
