@@ -62,7 +62,7 @@ Choose an option (1 or 2): 1
 The user selected the English language.
 AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
 MENU:
-1 - Deposit
+1 - Transfer
 2 - Withdrawal
 3 - Statement
 Choose an option:
@@ -76,7 +76,7 @@ Escolha uma opção (1 ou 2): 2
 O usuário selecionou Português_BR.
 NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
 MENU:
-1 - Depósito
+1 - Transferência
 2 - Saque
 3 - Extrato
 Escolha uma opção:
@@ -91,13 +91,12 @@ Allows the user to withdraw a specified amount and provides possible combination
 - **Checks** if the withdrawal amount is a multiple of 10 and within the allowed limits.
 - **Updates** the balance and records the date and time of the withdrawal with the São Paulo time zone.
 
-### 3. **Deposit**
+### 3. **Transfer**
 
-Allows the user to deposit an amount into a bank account. The user must provide the bank name, account number, agency number, and the deposit amount.
+Allows the user to transfer an amount into a bank account. The user must provide the bank name, account number, agency number, and the transfer amount.
 
 - **Requirements:** The amount must be a positive number.
-- **Updates:** Adds the deposited amount to the available balance of the ATM.
-- **Updates** the balance with the deposited amount.
+- **Updates:** The transfer process deducts the transferred amount from the total amount of the user's bank account.
 
 ### 4. **Statement**
 
@@ -132,7 +131,7 @@ Generates a statement showing the current balance of the ATM and the details of 
 ```plaintext
 AVAILABLE BANKNOTES: R$ 10.00, R$ 20.00, R$ 50.00
 MENU:
-1 - Deposit
+1 - Transfer
 2 - Withdraw
 3 - Statement
 Choose an option: 2
@@ -145,7 +144,7 @@ Printing, please wait for the notes to be dispensed...
 1 banknote(s) of R$ 50.00
 Withdrawal successful!
 MENU:
-1 - Deposit
+1 - Transfer
 2 - Withdraw
 3 - Statement
 Choose an option: 3
