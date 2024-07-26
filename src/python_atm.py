@@ -1,10 +1,14 @@
 import time
 from datetime import datetime
+import pytz
 
 # Variáveis globais
 saldo = 1000  # Saldo inicial do caixa eletrônico
 valor_sacado = 0  # Valor sacado no último saque
 data_saque = None  # Data e hora do último saque
+
+# Fuso horário de São Paulo
+saopaulo_tz = pytz.timezone('America/Sao_Paulo')
 
 def calcular_combinacoes(valor):
     """
@@ -102,7 +106,7 @@ def saque_dinheiro():
         print("Saque realizado com sucesso!")
         saldo -= valor_saque  # Atualiza o saldo
         valor_sacado = valor_saque  # Atualiza o valor sacado
-        data_saque = datetime.now()  # Registra a data e hora do saque
+        data_saque = datetime.now(saopaulo_tz)  # Registra a data e hora do saque com fuso horário
     else:
         print("Opção inválida!")
 
