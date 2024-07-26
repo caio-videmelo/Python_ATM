@@ -82,7 +82,21 @@ MENU:
 Escolha uma opção:
 ```
 
-### 2. **Withdraw**
+### 2. Currency Selection Menu
+
+Upon launching the application and selecting the preferred language, the user will be prompted to choose the currency for all transactions. This menu ensures that the user can conduct financial operations in the currency of his/her/they choice. The options available are:
+
+a. American Dollars (US$)
+
+b. Brazilian Real (R$)
+
+c. Euro (€)
+
+d. Pounds (£)
+
+After selecting a currency, the application will confirm the user's choice and adjust all subsequent operations and statements to reflect the chosen currency. This includes displaying available notes, transaction amounts, and account balances using the appropriate currency symbol and denominations.
+
+### 3. **Withdraw**
 
 Allows the user to withdraw a specified amount and provides possible combinations of banknotes for the withdrawal. The ATM supports R$ 10.00, R$ 20.00, and R$ 50.00 banknotes. Options are presented to the user, who can choose the desired combination. The withdrawn amount is subtracted from the available balance and recorded for future reference.
 
@@ -91,14 +105,14 @@ Allows the user to withdraw a specified amount and provides possible combination
 - **Checks** if the withdrawal amount is a multiple of 10 and within the allowed limits.
 - **Updates** the balance and records the date and time of the withdrawal with the São Paulo time zone.
 
-### 3. **Transfer**
+### 4. **Transfer**
 
 Allows the user to transfer an amount into a bank account. The user must provide the bank name, account number, agency number, and the transfer amount.
 
 - **Requirements:** The amount must be a positive number.
 - **Updates:** The transfer process deducts the transferred amount from the total amount of the user's bank account.
 
-### 4. **Statement**
+### 5. **Statement**
 
 Generates a statement showing the current balance of the ATM and the details of the last withdrawal, if any. The statement includes:
 
@@ -122,36 +136,94 @@ Generates a statement showing the current balance of the ATM and the details of 
 
 3. **Follow the instructions displayed in the menu:**
 
-    - **1 - Deposit:** Provide the deposit details.
-    - **2 - Withdraw:** Provide the withdrawal amount and choose the banknote combination.
-    - **3 - Statement:** View the current balance and details of the last withdrawal.
+### Step 1: Language Selection
 
-## Example Execution
+Prompt: "Choose the language: 1) English ; 2) Portuguese_BR"
 
-```plaintext
-AVAILABLE BANKNOTES: R$ 10.00, R$ 20.00, R$ 50.00
-MENU:
-1 - Transfer
-2 - Withdraw
-3 - Statement
-Choose an option: 2
-Please specify the amount to withdraw:
-Withdrawal amount: R$ 50
-Available banknote combinations:
-Option 1: 1 banknote(s) of R$ 50.00
-Choose the desired banknote combination: 1
-Printing, please wait for the notes to be dispensed...
-1 banknote(s) of R$ 50.00
-Withdrawal successful!
-MENU:
-1 - Transfer
-2 - Withdraw
-3 - Statement
-Choose an option: 3
-Statement in preparation...
-Current balance: R$ 950.00
-Withdrawal performed on 26/07/2024 15:50 for R$ 50.00
-````
+User Input: Enter 1 for English or 2 for Portuguese_BR.
+
+### Step 2: Currency Selection
+
+Prompt: "Please select the desired currency: 1 - American Dollars (US$); 2 - Brazilian Real (R$); 3 - Euro (€); 4 - Pounds (£)"
+
+User Input: Enter 1, 2, 3, or 4 based on the desired currency.
+
+Confirmation: The application will confirm the selected currency, e.g., "The currency chosen was American Dollars (US$)".
+
+### Step 3: Main Menu
+
+Once the currency is selected, the user will see the main menu. Here the user can choose to transfer money, withdraw money, or view the user's statement.
+
+Prompt: "MENU:\n1 - Transfer\n2 - Withdrawal\n3 - Statement\nChoose an option: "
+
+User Input: Enter 1, 2, or 3 based on the desired operation.
+
+### Step 4: Transfer Money
+
+Prompts:
+
+a. "Please inform the bank name:"
+
+b. "Please inform the account number to be credited:"
+
+c. "Please inform the agency number:"
+
+d. "Please inform the amount to be transferred: "
+
+User Input: Provide the required details and transfer amount.
+
+Confirmation: The application will confirm the successful transfer and update your balance.
+
+### Step 5: Withdraw Money
+
+Prompt: "Withdrawal value: "
+
+User Input: Enter the amount desired to withdraw (must be a multiple of 10).
+
+Confirmation: The application will print the notes and update the user's balance.
+
+### Step 6: View Statement
+
+Prompt: "Statement in preparation..."
+
+Output: The application will show the user's current balance and recent transfers and withdrawals.
+
+### Step 7: Handling Invalid Input
+
+If the user's provide an invalid input at any step, the application will notify the user and prompt him/her/they to try again.
+
+## Example Usage:
+
+Select Language:
+
+Input: 1
+
+Output: "The user selected the English language."
+
+Select Currency:
+
+Input: 2
+
+Output: "The currency chosen was Brazilian Real (R$)."
+
+Main Menu:
+
+Input: 1
+
+Output: Prompts for transfer details and amount.
+
+Transfer Money:
+
+Input: Provide bank name, account number, agency number, and transfer amount.
+
+Output: "Transfer of R$ X.XX successfully made to account X at agency Y of bank Z!"
+
+Main Menu:
+
+Input: 3
+
+Output: Displays current balance and recent transactions.
+
 ## Requirements
 
 Python 3.x
