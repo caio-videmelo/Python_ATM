@@ -1,77 +1,49 @@
 # Caixa Eletrônico
 
-Este projeto simula um caixa eletrônico com funcionalidades básicas de saque, depósito e emissão de extrato. O código está escrito em Python e foi desenvolvido para gerenciar transações de saque e depósito, além de fornecer um extrato das transações realizadas.
+Este projeto implementa um caixa eletrônico simples que permite realizar depósitos, saques e gerar extratos. O sistema suporta diferentes combinações de notas para o saque e exibe informações detalhadas sobre transações.
 
 ## Funcionalidades
 
-### 1. **Saque**
+1. **Depósito**
+   - Permite que o usuário deposite uma quantia de dinheiro.
+   - Solicita informações sobre o banco, número da conta e agência.
+   - Atualiza o saldo com o valor depositado.
 
-Permite ao usuário sacar um valor especificado e fornece combinações possíveis de notas para o saque. O caixa eletrônico suporta notas de R$ 10,00, R$ 20,00 e R$ 50,00. As opções são apresentadas ao usuário, que pode escolher a combinação desejada. O valor sacado é subtraído do saldo disponível e registrado para futuras referências.
+2. **Saque**
+   - Permite que o usuário saque uma quantia de dinheiro.
+   - Exibe combinações possíveis de notas disponíveis (R$ 10,00, R$ 20,00 e R$ 50,00).
+   - Verifica se o valor do saque é múltiplo de 10 e se está dentro dos limites permitidos.
+   - Atualiza o saldo e registra a data e hora do saque com o fuso horário de São Paulo.
 
-- **Requisitos:** O valor deve ser múltiplo de R$ 10,00 e não pode exceder R$ 600,00.
-- **Atualizações:** Atualiza o saldo disponível e registra o valor sacado e a data/hora do saque.
+3. **Extrato**
+   - Mostra o saldo atual.
+   - Exibe informações sobre o último saque, incluindo a data e hora no fuso horário de São Paulo.
 
-### 2. **Depósito**
+## Requisitos
 
-Permite ao usuário depositar um valor em uma conta bancária. O usuário deve informar o nome do banco, o número da conta, o número da agência e o valor a ser depositado.
+- Python 3.x
+- Biblioteca `pytz` para gerenciamento de fuso horário (instalável via `pip install pytz`)
 
-- **Requisitos:** O valor deve ser um número positivo.
-- **Atualizações:** Adiciona o valor depositado ao saldo disponível do caixa eletrônico.
+## Como Executar
 
-### 3. **Extrato**
+1. Clone o repositório:
+   ```bash
+   git clone <(https://github.com/caio-videmelo/Python_ATM)>
+```
 
-Emite um extrato mostrando o saldo atual e as informações do último saque realizado, se houver. O extrato inclui:
+2. Navegue até o diretório do projeto:
+```bash
+   cd <(https://github.com/caio-videmelo/Python_ATM/src/)>
+```
 
-- **Saldo atual:** O saldo disponível após todas as operações realizadas.
-- **Último saque:** A data/hora e o valor do último saque realizado.
+3. Execute o script:
+```bash
+python_atm.py
+```
 
-## Instruções de Uso
+## Detalhes do Fuso Horário
 
-1. **Clone o repositório:**
-
-    ```bash
-    git clone https://github.com/seu_usuario/caixa-eletronico.git
-    cd caixa-eletronico
-    ```
-
-2. **Execute o script:**
-
-    ```bash
-    python python_atm.py
-    ```
-
-3. **Siga as instruções exibidas no menu:**
-
-    - **1 - Depósito:** Informe os detalhes do depósito.
-    - **2 - Saque:** Informe o valor a ser sacado e escolha a combinação de notas.
-    - **3 - Extrato:** Visualize o saldo atual e as informações do último saque.
-
-## Exemplo de Execução
-
-```plaintext
-NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
-MENU:
-1 - Depósito
-2 - Saque
-3 - Extrato
-Escolha uma opção: 2
-Favor informar o valor a ser sacado:
-Valor do saque: R$ 50
-Combinações de notas disponíveis:
-Opção 1: 1 nota(s) de R$ 50,00
-Escolha a combinação de notas desejada: 1
-Imprimindo, aguarde as notas serem contabilizadas e impressas...
-1 nota(s) de R$ 50,00
-Saque realizado com sucesso!
-MENU:
-1 - Depósito
-2 - Saque
-3 - Extrato
-Escolha uma opção: 3
-Extrato em preparação...
-Saldo atual de R$ 950.00
-Saque realizado em 26/07/2024 15:50 no valor de R$ 50.00
-````
+A data e hora dos saques são registradas no fuso horário de São Paulo (America/Sao_Paulo) para garantir a precisão das informações temporais.
 
 ## Requisitos
 
