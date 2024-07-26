@@ -1,161 +1,150 @@
-# Caixa Eletrônico
+# Simulador de Caixa Eletrônico
 
-Este projeto implementa um caixa eletrônico simples que permite realizar depósitos, saques e gerar extratos. O sistema suporta diferentes combinações de notas para o saque e exibe informações detalhadas sobre transações.
+Este repositório contém um simulador de caixa eletrônico baseado em Python. O simulador permite que os usuários realizem operações básicas de caixa eletrônico, como seleção de idioma, seleção de moeda, transferência de dinheiro, saque de dinheiro e visualização de extratos. Ele suporta vários idiomas (Inglês e Português Brasileiro) e várias moedas (Dólares Americanos, Real Brasileiro, Euro e Libras Esterlinas).
 
-## Funcionalidades
+## Recursos
 
-### 1. Menu de seleção de idioma:
+Suporte a múltiplos idiomas: Inglês e Português Brasileiro.
 
-Este projeto suporta dois idiomas afim de oferecer maior acessibilidade. Ao inicializar o programa, é apresentado ao usuário um menu de seleção de idioma. Aqui vai como funciona:
+Opções de moedas múltiplas: Dólares Americanos (US$), Real Brasileiro (R$), Euro (€) e Libras Esterlinas (£).
 
-### Como usar o menu de seleção de idioma:
+Operações básicas de caixa eletrônico: Transferência de dinheiro, saque de dinheiro e visualização de extrato.
 
-Prompt inicial:Quando um programa começa, ele apresenta a seguinte mensagem:
+Combinações de notas para saques, garantindo denominações válidas de notas.
+
+Mensagens e confirmações amigáveis ao usuário.
+
+## Como Usar
+
+### Passo 1: Seleção de Idioma
+
+Prompt: "Escolha o idioma: 1) Inglês ; 2) Português_BR"
+
+Entrada do Usuário: Digite 1 para Inglês ou 2 para Português_BR.
+
+### Passo 2: Seleção de Moeda
+
+Prompt: "Por favor, selecione a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real Brasileiro (R$); 3 - Euro (€); 4 - Libras (£)"
+
+Entrada do Usuário: Digite 1, 2, 3 ou 4 com base na moeda desejada.
+
+Confirmação: O aplicativo confirmará a moeda selecionada, por exemplo, "A moeda escolhida foi Dólares Americanos (US$)".
+
+### Passo 3: Menu Principal
+
+Uma vez que a moeda é selecionada, o usuário verá o menu principal. Aqui, o usuário pode escolher transferir dinheiro, sacar dinheiro ou visualizar o extrato do usuário.
+
+Prompt: "MENU:\n1 - Transferência\n2 - Saque\n3 - Extrato\nEscolha uma opção: "
+
+Entrada do Usuário: Digite 1, 2 ou 3 com base na operação desejada.
+
+### Passo 4: Transferir Dinheiro
+
+Prompts:
+
+a. "Por favor, informe o nome do banco:"
+
+b. "Por favor, informe o número da conta a ser creditada:"
+
+c. "Por favor, informe o número da agência:"
+
+d. "Por favor, informe o valor a ser transferido:"
+
+Entrada do Usuário: Forneça os detalhes e o valor da transferência.
+
+Confirmação: O aplicativo confirmará a transferência bem-sucedida e atualizará seu saldo.
+
+### Passo 5: Sacar Dinheiro
+
+Prompt: "Valor do saque:"
+
+Entrada do Usuário: Digite o valor desejado para saque (deve ser múltiplo de 10).
+
+Confirmação: O aplicativo imprimirá as notas e atualizará o saldo do usuário.
+
+### Passo 6: Visualizar Extrato
+
+Prompt: "Extrato em preparação..."
+
+Saída: O aplicativo mostrará o saldo atual do usuário e as transferências e saques recentes.
+
+### Passo 7: Tratamento de Entrada Inválida
+
+Se o usuário fornecer uma entrada inválida em qualquer etapa, o aplicativo notificará o usuário e solicitará que ele/ela/elu tente novamente.
+
+### Exemplo de Uso
+
+Selecionar Idioma:
+
+Entrada: 1
+
+Saída: "O usuário selecionou o idioma Inglês."
+
+Selecionar Moeda:
+
+Entrada: 2
+
+Saída: "A moeda escolhida foi Real Brasileiro (R$)."
+
+Menu Principal:
+
+Entrada: 1
+
+Saída: Solicita detalhes da transferência e valor.
+
+## Transferir Dinheiro:
+
+Entrada: Forneça nome do banco, número da conta, número da agência e valor da transferência.
+
+Saída: "Transferência de R$ X,XX realizada com sucesso para a conta X na agência Y do banco Z!"
+
+Menu Principal:
+
+Entrada: 3
+
+Saída: Mostra saldo atual e transações recentes.
+
+## Instalação
+
+Clone o repositório:
 
 ```bash
-Choose the language: 1) English ; 2) Portuguese_BR
+git clone https://github.com/caio-videmelo/Python_ATM.git
 ```
 
-### Selecionando o idioma:
-
-Usuários podem escolher seu idioma de preferência digitano os números correspondentes:
-
-1 para Inglês
-
-2 para Português (Brasil)
-
-### Mensagem de confirmação:
-
-Após fazer a seleção, o programa confirma a escolha do usuário:
-
-### Se inglês for selecionado:
+Navegue até o diretório do projeto:
 
 ```bash
-The user selected the English language.
+cd src
 ```
 
-### Se português for selecionado:
+Execute a aplicação:
 
 ```bash
-O usuário selecionou Português_BR.
+python python_atm.py
 ```
-
-### Interação subsequente:
-
-Uma vez que um idioma é selecionado, todas as mensagens subsequentes e outputs serão apresentados no idioma escolhido. Isso inclui:
-
-- Mensagens de saque
-
-- Instruções de transferência
-
-- Menu de opções
-
-- Mensagens de erro
-
-### Exemplo de funcionamento:
-
-### Usuário seleciona inglês:
-
-Choose the language: 1) English ; 2) Portuguese_BR
-
-Choose an option (1 or 2): 1
-
-The user selected the English language.
-
-AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
-
-MENU:
-
-1 - Transfer
-
-2 - Withdrawal
-
-3 - Statement
-
-Choose an option:
-
-### Usuário seleciona português:
-
-Escolha o idioma: 1) Inglês ; 2) Português_BR
-
-Escolha uma opção (1 ou 2): 2
-
-O usuário selecionou Português_BR.
-
-NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
-
-MENU:
-
-1 - Transferência
-
-2 - Saque
-
-3 - Extrato
-
-Escolha uma opção:
-
-2. **Transferência**
- 
-   - Permite que o usuário transfira uma quantia de dinheiro.
-   - Solicita informações sobre o nome do banco, número da conta e agência.
-   - Atualiza o saldo com o valor transferido.
-
-3. **Saque**
-
-   - Permite que o usuário saque uma quantia de dinheiro.
-   - Exibe combinações possíveis de notas disponíveis (R$ 10,00, R$ 20,00 e R$ 50,00).
-   - Verifica se o valor do saque é múltiplo de 10 e se está dentro dos limites permitidos.
-   - Atualiza o saldo e registra a data e hora do saque com o fuso horário de São Paulo.
-
-5. **Extrato**
- 
-   - Mostra o saldo atual.
-   - Exibe informações sobre a última operação realizada, incluindo a data e hora no fuso horário de São Paulo.
-
-## Requisitos
-
-- Python 3.x
-- Biblioteca `pytz` para gerenciamento de fuso horário (instalável via `pip install pytz`)
-
-## Como Executar
-
-1. Clone o repositório:
-   ```bash
-   git clone <(https://github.com/caio-videmelo/Python_ATM)>
-   ```
-
-2. Navegue até o diretório do projeto:
-```bash
-   cd <(https://github.com/caio-videmelo/Python_ATM/src/)>
-```
-
-3. Execute o script:
-```bash
-python_atm.py
-```
-
-## Detalhes do Fuso Horário
-
-A data e hora dos saques são registradas no fuso horário de São Paulo (America/Sao_Paulo) para garantir a precisão das informações temporais.
 
 ## Requisitos
 
 Python 3.x
 
-## Contribuições
+Biblioteca pytz
 
-Se desejar contribuir com o projeto, siga estas etapas:
+## Dependências
 
-Faça um fork do repositório.
+Instale as dependências usando o seguinte comando:
 
-Crie uma nova branch para suas alterações (git checkout -b minha-nova-feature).
-
-Faça commit das suas alterações (git commit -am 'Adiciona nova funcionalidade').
-
-Faça push para a branch (git push origin minha-nova-feature).
-
-Abra um Pull Request.
-
+```bash
+pip install pytz
+```
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
+Este projeto é licenciado sob a Licença MIT.
+
+## Agradecimentos
+
+Este projeto é inspirado na necessidade de um simulador básico de caixa eletrônico para praticar programação em Python e entender operações bancárias básicas.
+
+## Contribuições
+
+Contribuições são bem-vindas! Por favor, faça um fork deste repositório e envie um pull request para quaisquer melhorias ou correções de bugs.
