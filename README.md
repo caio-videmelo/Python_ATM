@@ -44,13 +44,13 @@ O usuário selecionou Português_BR.
 
 Uma vez que um idioma é selecionado, todas as mensagens subsequentes e outputs serão apresentados no idioma escolhido. Isso inclui:
 
-Mensagens de saque
+- Mensagens de saque
 
-Instruções de depósito
+- Instruções de depósito
 
-Menu de opções
+- Menu de opções
 
-Mensagens de erro
+- Mensagens de erro
 
 ### Exemplo de funcionamento:
 
