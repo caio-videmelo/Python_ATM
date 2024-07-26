@@ -29,7 +29,7 @@ Este projeto implementa um caixa eletrônico simples que permite realizar depós
 1. Clone o repositório:
    ```bash
    git clone <(https://github.com/caio-videmelo/Python_ATM)>
-```
+   ```
 
 2. Navegue até o diretório do projeto:
 ```bash
