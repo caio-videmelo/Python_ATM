@@ -94,15 +94,15 @@ MENU:
 
 Escolha uma opção:
 
-2. **Depósito**
+2. **Transferência**
  
-   - Permite que o usuário deposite uma quantia de dinheiro.
-   - Solicita informações sobre o banco, número da conta e agência.
-   - Atualiza o saldo com o valor depositado.
+   - Permite que o usuário transfira uma quantia de dinheiro.
+   - Solicita informações sobre o nome do banco, número da conta e agência.
+   - Atualiza o saldo com o valor transferido.
 
 3. **Saque**
 
-    - Permite que o usuário saque uma quantia de dinheiro.
+   - Permite que o usuário saque uma quantia de dinheiro.
    - Exibe combinações possíveis de notas disponíveis (R$ 10,00, R$ 20,00 e R$ 50,00).
    - Verifica se o valor do saque é múltiplo de 10 e se está dentro dos limites permitidos.
    - Atualiza o saldo e registra a data e hora do saque com o fuso horário de São Paulo.
@@ -110,7 +110,7 @@ Escolha uma opção:
 5. **Extrato**
  
    - Mostra o saldo atual.
-   - Exibe informações sobre o último saque, incluindo a data e hora no fuso horário de São Paulo.
+   - Exibe informações sobre a última operação realizada, incluindo a data e hora no fuso horário de São Paulo.
 
 ## Requisitos
 
