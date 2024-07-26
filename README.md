@@ -57,25 +57,41 @@ Mensagens de erro
 ### Usuário seleciona inglês:
 
 Choose the language: 1) English ; 2) Portuguese_BR
+
 Choose an option (1 or 2): 1
+
 The user selected the English language.
+
 AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
+
 MENU:
+
 1 - Deposit
+
 2 - Withdrawal
+
 3 - Statement
+
 Choose an option:
 
 ### Usuário seleciona português:
 
 Escolha o idioma: 1) Inglês ; 2) Português_BR
+
 Escolha uma opção (1 ou 2): 2
+
 O usuário selecionou Português_BR.
+
 NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
+
 MENU:
+
 1 - Depósito
+
 2 - Saque
+
 3 - Extrato
+
 Escolha uma opção:
 
 2. **Depósito**
