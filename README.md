@@ -46,7 +46,7 @@ Uma vez que um idioma é selecionado, todas as mensagens subsequentes e outputs 
 
 - Mensagens de saque
 
-- Instruções de depósito
+- Instruções de transferência
 
 - Menu de opções
 
@@ -66,7 +66,7 @@ AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
 
 MENU:
 
-1 - Deposit
+1 - Transfer
 
 2 - Withdrawal
 
@@ -86,7 +86,7 @@ NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
 
 MENU:
 
-1 - Depósito
+1 - Transferência
 
 2 - Saque
 
@@ -95,17 +95,20 @@ MENU:
 Escolha uma opção:
 
 2. **Depósito**
+ 
    - Permite que o usuário deposite uma quantia de dinheiro.
    - Solicita informações sobre o banco, número da conta e agência.
    - Atualiza o saldo com o valor depositado.
 
 3. **Saque**
-   - Permite que o usuário saque uma quantia de dinheiro.
+
+    - Permite que o usuário saque uma quantia de dinheiro.
    - Exibe combinações possíveis de notas disponíveis (R$ 10,00, R$ 20,00 e R$ 50,00).
    - Verifica se o valor do saque é múltiplo de 10 e se está dentro dos limites permitidos.
    - Atualiza o saldo e registra a data e hora do saque com o fuso horário de São Paulo.
 
-4. **Extrato**
+5. **Extrato**
+ 
    - Mostra o saldo atual.
    - Exibe informações sobre o último saque, incluindo a data e hora no fuso horário de São Paulo.
 
