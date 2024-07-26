@@ -3,13 +3,15 @@
 This project simulates an ATM with basic functionalities for withdrawing, depositing, and generating a statement. The code is written in Python and is designed to manage cash transactions and provide a statement of transactions performed.
 
 ## Features
-
+ 
 ### 1. **Withdraw**
 
 Allows the user to withdraw a specified amount and provides possible combinations of banknotes for the withdrawal. The ATM supports R$ 10.00, R$ 20.00, and R$ 50.00 banknotes. Options are presented to the user, who can choose the desired combination. The withdrawn amount is subtracted from the available balance and recorded for future reference.
 
 - **Requirements:** The amount must be a multiple of R$ 10.00 and cannot exceed R$ 600.00.
 - **Updates:** Updates the available balance and records the withdrawn amount and the date/time of the withdrawal.
+- **Checks** if the withdrawal amount is a multiple of 10 and within the allowed limits.
+- **Updates** the balance and records the date and time of the withdrawal with the São Paulo time zone.
 
 ### 2. **Deposit**
 
@@ -17,27 +19,28 @@ Allows the user to deposit an amount into a bank account. The user must provide 
 
 - **Requirements:** The amount must be a positive number.
 - **Updates:** Adds the deposited amount to the available balance of the ATM.
+- **Updates** the balance with the deposited amount.
 
 ### 3. **Statement**
 
 Generates a statement showing the current balance of the ATM and the details of the last withdrawal, if any. The statement includes:
 
 - **Current Balance:** The available balance after all transactions.
-- **Last Withdrawal:** The date/time and amount of the last withdrawal performed.
+- **Last Withdrawal:** The date/time and amount of the last withdrawal performed, including the date and time in the São Paulo time zone.
 
 ## Usage Instructions
 
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your_username/atm-simulator.git
-    cd atm-simulator
+    git clone (https://github.com/caio-videmelo/Python_ATM)
+    cd src
     ```
 
 2. **Run the script:**
 
     ```bash
-    python atm_simulator.py
+    python python_atm.py
     ```
 
 3. **Follow the instructions displayed in the menu:**
@@ -75,6 +78,7 @@ Withdrawal performed on 26/07/2024 15:50 for R$ 50.00
 ## Requirements
 
 Python 3.x
+- `pytz` library for time zone management (installable via `pip install pytz`)
 
 ## Contributing
 
