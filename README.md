@@ -4,18 +4,92 @@ Este projeto implementa um caixa eletrônico simples que permite realizar depós
 
 ## Funcionalidades
 
-1. **Depósito**
+### 1. Menu de seleção de idioma:
+
+Este projeto suporta dois idiomas afim de oferecer maior acessibilidade. Ao inicializar o programa, é apresentado ao usuário um menu de seleção de idioma. Aqui vai como funciona:
+
+### Como usar o menu de seleção de idioma:
+
+Prompt inicial:Quando um programa começa, ele apresenta a seguinte mensagem:
+
+```bash
+Choose the language: 1) English ; 2) Portuguese_BR
+```
+
+### Selecionando o idioma:
+
+Usuários podem escolher seu idioma de preferência digitano os números correspondentes:
+
+1 para Inglês
+
+2 para Português (Brasil)
+
+### Mensagem de confirmação:
+
+Após fazer a seleção, o programa confirma a escolha do usuário:
+
+### Se inglês for selecionado:
+
+```bash
+The user selected the English language.
+```
+
+### Se português for selecionado:
+
+```bash
+O usuário selecionou Português_BR.
+```
+
+### Interação subsequente:
+
+Uma vez que um idioma é selecionado, todas as mensagens subsequentes e outputs serão apresentados no idioma escolhido. Isso inclui:
+
+Mensagens de saque
+
+Instruções de depósito
+
+Menu de opções
+
+Mensagens de erro
+
+### Exemplo de funcionamento:
+
+### Usuário seleciona inglês:
+
+Choose the language: 1) English ; 2) Portuguese_BR
+Choose an option (1 or 2): 1
+The user selected the English language.
+AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
+MENU:
+1 - Deposit
+2 - Withdrawal
+3 - Statement
+Choose an option:
+
+### Usuário seleciona português:
+
+Escolha o idioma: 1) Inglês ; 2) Português_BR
+Escolha uma opção (1 ou 2): 2
+O usuário selecionou Português_BR.
+NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
+MENU:
+1 - Depósito
+2 - Saque
+3 - Extrato
+Escolha uma opção:
+
+2. **Depósito**
    - Permite que o usuário deposite uma quantia de dinheiro.
    - Solicita informações sobre o banco, número da conta e agência.
    - Atualiza o saldo com o valor depositado.
 
-2. **Saque**
+3. **Saque**
    - Permite que o usuário saque uma quantia de dinheiro.
    - Exibe combinações possíveis de notas disponíveis (R$ 10,00, R$ 20,00 e R$ 50,00).
    - Verifica se o valor do saque é múltiplo de 10 e se está dentro dos limites permitidos.
    - Atualiza o saldo e registra a data e hora do saque com o fuso horário de São Paulo.
 
-3. **Extrato**
+4. **Extrato**
    - Mostra o saldo atual.
    - Exibe informações sobre o último saque, incluindo a data e hora no fuso horário de São Paulo.
 
