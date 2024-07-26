@@ -3,8 +3,86 @@
 This project simulates an ATM with basic functionalities for withdrawing, depositing, and generating a statement. The code is written in Python and is designed to manage cash transactions and provide a statement of transactions performed. The execution of the program is in brazilian portuguese (PT-BR).
 
 ## Features
- 
-### 1. **Withdraw**
+
+## 1. Language Selection Menu
+
+The ATM simulation program supports two languages to enhance user accessibility. Upon starting the program, users are presented with a language selection menu. Here’s how it works:
+
+### How to Use the Language Selection Menu
+
+Initial Prompt: When the program starts, it displays the following message:
+
+```bash
+Choose the language: 1) English ; 2) Portuguese_BR
+```
+
+### Selecting a language:
+
+Users can choose their preferred language by entering the corresponding number:
+
+1 for English
+
+2 for Portuguese (Brazil)
+
+### Confirmation Message:
+
+After making a selection, the program confirms the user's choice with a message:
+
+If English is selected:
+
+```bash
+The user selected the English language.
+```
+
+If Portuguese is selected:
+
+```bash
+O usuário selecionou Português_BR.
+```
+
+### Subsequent Program Interaction:
+
+Once a language is selected, all subsequent prompts, messages, and outputs will be displayed in the chosen language. This includes:
+
+Withdrawal prompts
+
+Deposit instructions
+
+Menu options
+
+Error messages
+
+### Example Interactions:
+
+User selects English:
+
+```bash
+Choose the language: 1) English ; 2) Portuguese_BR
+Choose an option (1 or 2): 1
+The user selected the English language.
+AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00
+MENU:
+1 - Deposit
+2 - Withdrawal
+3 - Statement
+Choose an option:
+```
+
+User selects Portuguese:
+
+```bash
+Escolha o idioma: 1) Inglês ; 2) Português_BR
+Escolha uma opção (1 ou 2): 2
+O usuário selecionou Português_BR.
+NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00
+MENU:
+1 - Depósito
+2 - Saque
+3 - Extrato
+Escolha uma opção:
+```
+
+### 2. **Withdraw**
 
 Allows the user to withdraw a specified amount and provides possible combinations of banknotes for the withdrawal. The ATM supports R$ 10.00, R$ 20.00, and R$ 50.00 banknotes. Options are presented to the user, who can choose the desired combination. The withdrawn amount is subtracted from the available balance and recorded for future reference.
 
@@ -13,7 +91,7 @@ Allows the user to withdraw a specified amount and provides possible combination
 - **Checks** if the withdrawal amount is a multiple of 10 and within the allowed limits.
 - **Updates** the balance and records the date and time of the withdrawal with the São Paulo time zone.
 
-### 2. **Deposit**
+### 3. **Deposit**
 
 Allows the user to deposit an amount into a bank account. The user must provide the bank name, account number, agency number, and the deposit amount.
 
@@ -21,7 +99,7 @@ Allows the user to deposit an amount into a bank account. The user must provide 
 - **Updates:** Adds the deposited amount to the available balance of the ATM.
 - **Updates** the balance with the deposited amount.
 
-### 3. **Statement**
+### 4. **Statement**
 
 Generates a statement showing the current balance of the ATM and the details of the last withdrawal, if any. The statement includes:
 
