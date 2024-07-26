@@ -80,6 +80,10 @@ Withdrawal performed on 26/07/2024 15:50 for R$ 50.00
 Python 3.x
 - `pytz` library for time zone management (installable via `pip install pytz`)
 
+## Time Zone Details
+
+The date and time of withdrawals are recorded in the São Paulo time zone (America/Sao_Paulo) to ensure the accuracy of the temporal information.
+
 ## Contributing
 
 If you would like to contribute to the project, please follow these steps:
