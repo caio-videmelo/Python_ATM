@@ -71,3 +71,26 @@ Escolha uma opção: 3
 Extrato em preparação...
 Saldo atual de R$ 950.00
 Saque realizado em 26/07/2024 15:50 no valor de R$ 50.00
+````
+
+## Requisitos
+
+Python 3.x
+
+## Contribuições
+
+Se desejar contribuir com o projeto, siga estas etapas:
+
+Faça um fork do repositório.
+
+Crie uma nova branch para suas alterações (git checkout -b minha-nova-feature).
+
+Faça commit das suas alterações (git commit -am 'Adiciona nova funcionalidade').
+
+Faça push para a branch (git push origin minha-nova-feature).
+
+Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
