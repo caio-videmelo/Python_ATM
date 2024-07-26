@@ -10,166 +10,196 @@ data_saque = None  # Data e hora do último saque
 # Fuso horário de São Paulo
 saopaulo_tz = pytz.timezone('America/Sao_Paulo')
 
+# Variáveis para mensagens em diferentes idiomas
+messages = {
+    'english': {
+        'welcome': "Choose the language: 1) English ; 2) Portuguese_BR",
+        'selected_english': "The user selected the English language.",
+        'selected_portuguese': "O usuário selecionou Português_BR.",
+        'invalid_data': "Invalid data, ending the operation.",
+        'withdrawal_limit': "It's impossible to withdraw this amount from this ATM with the available notes!",
+        'insufficient_balance': "Insufficient balance to perform the withdrawal.",
+        'available_notes': "AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00",
+        'menu': "MENU:\n1 - Deposit\n2 - Withdrawal\n3 - Statement\nChoose an option: ",
+        'combination_options': "Available note combinations:",
+        'success_withdrawal': "Withdrawal successful!",
+        'success_deposit': "Deposit of R$ {:.2f} successfully made into account {} at agency {} of bank {}!",
+        'statement_preparation': "Statement in preparation...",
+        'no_withdrawal': "No withdrawals made yet.",
+        'invalid_option': "Invalid option!",
+        'choose_combination': "Choose the desired note combination: ",
+        'printing_notes': "Printing, please wait for the notes to be counted and printed...",
+        'withdrawal_value': "Withdrawal value: ",
+    },
+    'portuguese': {
+        'welcome': "Escolha o idioma: 1) Inglês ; 2) Português_BR",
+        'selected_english': "O usuário selecionou o idioma inglês.",
+        'selected_portuguese': "O usuário selecionou Português_BR.",
+        'invalid_data': "Dados inválidos, encerrando a operação.",
+        'withdrawal_limit': "Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!",
+        'insufficient_balance': "Saldo insuficiente para realizar o saque.",
+        'available_notes': "NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00",
+        'menu': "MENU:\n1 - Depósito\n2 - Saque\n3 - Extrato\nEscolha uma opção: ",
+        'combination_options': "Combinações de notas disponíveis:",
+        'success_withdrawal': "Saque realizado com sucesso!",
+        'success_deposit': "Depósito de R$ {:.2f} realizado com sucesso na conta {} da agência {} do banco {}!",
+        'statement_preparation': "Extrato em preparação...",
+        'no_withdrawal': "Nenhum saque realizado ainda.",
+        'invalid_option': "Opção inválida!",
+        'choose_combination': "Escolha a combinação de notas desejada: ",
+        'printing_notes': "Imprimindo, aguarde as notas serem contabilizadas e impressas...",
+        'withdrawal_value': "Valor do saque: ",
+    }
+}
+
 def calcular_combinacoes(valor):
-    """
-    Calcula as combinações possíveis de notas para um determinado valor.
-
-    Args:
-        valor (int): O valor a ser sacado.
-
-    Returns:
-        list: Lista de tuplas com as combinações de notas disponíveis.
-    """
     notas_disponiveis = [50, 20, 10]
     combinacoes = []
 
-    # Gera combinações de notas
     for quantidade_nota50 in range(0, valor // 50 + 1):
         for quantidade_nota20 in range(0, (valor - quantidade_nota50 * 50) // 20 + 1):
             quantidade_nota10 = (valor - (quantidade_nota50 * 50 + quantidade_nota20 * 20)) // 10
             
-            # Verifica se a combinação é válida
             if (quantidade_nota50 * 50 + quantidade_nota20 * 20 + quantidade_nota10 * 10) == valor:
                 combinacoes.append((quantidade_nota50, quantidade_nota20, quantidade_nota10))
 
-    # Ordena as combinações pelo número total de notas
     combinacoes.sort(key=lambda x: x[0] + x[1] + x[2])
-
-    # Seleciona as 3 combinações com a menor quantidade de notas
     return combinacoes[:3]
 
-def saque_dinheiro():
-    """
-    Realiza o saque do valor especificado exibindo as combinações possíveis de notas.
-    """
+def saque_dinheiro(lang):
     global saldo, valor_sacado, data_saque
-    print("Favor informar o valor a ser sacado:")
-    valor_saque = input("Valor do saque: R$ ")
+
+    # Prompt for withdrawal amount
+    valor_saque = input(messages[lang]['withdrawal_value'])
+    
+    # Validate input
     if not valor_saque.replace(".", "").isdigit():
-        print("Dados inválidos, encerrando a operação")
+        print(messages[lang]['invalid_data'])
         return
 
     valor_saque = float(valor_saque)
 
-    # Verifica se o valor está dentro do intervalo permitido
+    # Check if the withdrawal amount is valid
     if valor_saque < 10 or valor_saque > 600:
-        print("Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!")
+        print(messages[lang]['withdrawal_limit'])
         return
 
-    # Verifica se o valor é múltiplo de 10
+    # Check if the amount is a multiple of 10
     if valor_saque % 10 != 0:
-        print("Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!")
+        print(messages[lang]['withdrawal_limit'])
         return
 
-    # Verifica se há saldo suficiente
+    # Check if there is sufficient balance
     if valor_saque > saldo:
-        print("Saldo insuficiente para realizar o saque.")
+        print(messages[lang]['insufficient_balance'])
         return
 
-    # Calcula combinações de notas
+    # Calculate combinations of notes
     combinacoes = calcular_combinacoes(int(valor_saque))
 
     if not combinacoes:
-        print("Não foi possível encontrar combinações de notas para o valor solicitado.")
+        print(messages[lang]['withdrawal_limit'])
         return
 
-    # Exibe as combinações disponíveis
-    print("Combinações de notas disponíveis:")
+    print(messages[lang]['combination_options'])
     for i, (q50, q20, q10) in enumerate(combinacoes):
         partes = []
         if q50 > 0:
-            partes.append(f"{q50} nota(s) de R$ 50,00")
+            partes.append(f"{q50} note(s) of R$ 50.00")
         if q20 > 0:
-            partes.append(f"{q20} nota(s) de R$ 20,00")
+            partes.append(f"{q20} note(s) of R$ 20.00")
         if q10 > 0:
-            partes.append(f"{q10} nota(s) de R$ 10,00")
+            partes.append(f"{q10} note(s) of R$ 10.00")
 
-        print(f"Opção {i + 1}: {', '.join(partes)}")
+        print(f"Option {i + 1}: {', '.join(partes)}")
 
-    # Solicita ao usuário que escolha uma combinação
     try:
-        escolha = int(input("Escolha a combinação de notas desejada: ")) - 1
+        escolha = int(input(messages[lang]['choose_combination'])) - 1
     except ValueError:
-        print("Entrada inválida. Por favor, insira um número.")
+        print(messages[lang]['invalid_option'])
         return
 
     if 0 <= escolha < len(combinacoes):
-        print("Imprimindo, aguarde as notas serem contabilizadas e impressas...")
+        print(messages[lang]['printing_notes'])
         time.sleep(1)
         q50, q20, q10 = combinacoes[escolha]
         if q50 > 0:
-            print(f"{q50} nota(s) de R$ 50,00")
+            print(f"{q50} note(s) of R$ 50.00")
         if q20 > 0:
-            print(f"{q20} nota(s) de R$ 20,00")
+            print(f"{q20} note(s) of R$ 20.00")
         if q10 > 0:
-            print(f"{q10} nota(s) de R$ 10,00")
-        print("Saque realizado com sucesso!")
-        saldo -= valor_saque  # Atualiza o saldo
-        valor_sacado = valor_saque  # Atualiza o valor sacado
-        data_saque = datetime.now(saopaulo_tz)  # Registra a data e hora do saque com fuso horário
+            print(f"{q10} note(s) of R$ 10.00")
+        print(messages[lang]['success_withdrawal'])
+        saldo -= valor_saque
+        valor_sacado = valor_saque
+        data_saque = datetime.now(saopaulo_tz)
     else:
-        print("Opção inválida!")
+        print(messages[lang]['invalid_option'])
 
-def depositar_dinheiro():
-    """
-    Realiza o depósito de dinheiro em uma conta.
-    """
+def depositar_dinheiro(lang):
     global saldo
-    print("Favor informar o nome do banco:")
-    banco = input("Nome do banco: ")
+    print("Please inform the bank name:")
+    banco = input("Bank name: ")
     if not isinstance(banco, str):
-        print("Dados inválidos, encerrando a operação")
+        print(messages[lang]['invalid_data'])
         return
 
-    print("Favor informar o número da conta a ser favorecida:")
-    conta = input("Número da conta: ")
+    print("Please inform the account number to be credited:")
+    conta = input("Account number: ")
     if not conta.isdigit():
-        print("Dados inválidos, encerrando a operação")
+        print(messages[lang]['invalid_data'])
         return
 
-    print("Favor informar o número da agência:")
-    agencia = input("Número da agência: ")
+    print("Please inform the agency number:")
+    agencia = input("Agency number: ")
     if not agencia.isdigit():
-        print("Dados inválidos, encerrando a operação")
+        print(messages[lang]['invalid_data'])
         return
 
-    print("Favor informar valor a ser depositado:")
-    valor_depositado = input("Valor do depósito: R$ ")
-    if not valor_depositado.isdigit():
-        print("Dados inválidos, encerrando a operação")
+    print("Please inform the amount to be deposited:")
+    valor_depositado = input("Deposit amount: R$ ")
+    if not valor_depositado.replace(".", "").isdigit():
+        print(messages[lang]['invalid_data'])
         return
 
     valor_depositado = float(valor_depositado)
-    saldo += valor_depositado  # Atualiza o saldo
-    print(f"Depósito de R$ {valor_depositado:.2f} realizado com sucesso na conta {conta} da agência {agencia} do banco {banco}!")
+    saldo += valor_depositado
+    print(messages[lang]['success_deposit'].format(valor_depositado, conta, agencia, banco))
 
 def main():
-    """
-    Função principal para executar o programa de saque e depósito de dinheiro.
-    """
     global valor_sacado, saldo, data_saque
-    # Exibe as notas disponíveis antes de solicitar o valor do saque
-    print("NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00")
+
+    # Language selection
+    print(messages['english']['welcome'])
+    language_choice = input("Choose an option (1 or 2): ")
+    if language_choice == '1':
+        lang = 'english'
+        print(messages['english']['selected_english'])
+    elif language_choice == '2':
+        lang = 'portuguese'
+        print(messages['portuguese']['selected_portuguese'])
+    else:
+        print("Invalid selection, defaulting to English.")
+        lang = 'english'
+
+    print(messages[lang]['available_notes'])
     while True:
-        print("MENU:")
-        print("1 - Depósito")
-        print("2 - Saque")
-        print("3 - Extrato")
-        opcao = input("Escolha uma opção: ")
+        print(messages[lang]['menu'])
+        opcao = input()
         if opcao == "1":
-            depositar_dinheiro()
+            depositar_dinheiro(lang)
         elif opcao == "2":
-            saque_dinheiro()
+            saque_dinheiro(lang)
         elif opcao == "3":
-            print("Extrato em preparação...")
+            print(messages[lang]['statement_preparation'])
             time.sleep(1)
-            print(f"Saldo atual de R$ {saldo:.2f}")
+            print(f"Current balance: R$ {saldo:.2f}")
             if data_saque:
-                print(f"Saque realizado em {data_saque.strftime('%d/%m/%Y %H:%M')} no valor de R$ {valor_sacado:.2f}")
+                print(f"Withdrawal made on {data_saque.strftime('%m/%d/%Y %H:%M')} in the amount of R$ {valor_sacado:.2f}")
             else:
-                print("Nenhum saque realizado ainda.")
+                print(messages[lang]['no_withdrawal'])
         else:
-            print("Opção inválida!")
+            print(messages[lang]['invalid_option'])
 
 if __name__ == "__main__":
     main()
