@@ -5,7 +5,10 @@ import pytz
 # Variáveis globais
 saldo = 1000  # Saldo inicial do caixa eletrônico
 valor_sacado = 0  # Valor sacado no último saque
+valor_transferido = 0  # Valor transferido na última transferência
 data_saque = None  # Data e hora do último saque
+data_transferencia = None  # Data e hora da última transferência
+transacoes = []  # Lista para armazenar transações
 
 # Fuso horário de São Paulo
 saopaulo_tz = pytz.timezone('America/Sao_Paulo')
@@ -20,16 +23,18 @@ messages = {
         'withdrawal_limit': "It's impossible to withdraw this amount from this ATM with the available notes!",
         'insufficient_balance': "Insufficient balance to perform the withdrawal.",
         'available_notes': "AVAILABLE NOTES: R$ 10.00, R$ 20.00, R$ 50.00",
-        'menu': "MENU:\n1 - Deposit\n2 - Withdrawal\n3 - Statement\nChoose an option: ",
+        'menu': "MENU:\n1 - Transfer\n2 - Withdrawal\n3 - Statement\nChoose an option: ",
         'combination_options': "Available note combinations:",
         'success_withdrawal': "Withdrawal successful!",
-        'success_deposit': "Deposit of R$ {:.2f} successfully made into account {} at agency {} of bank {}!",
+        'success_transfer': "Transfer of R$ {:.2f} successfully made to account {} at agency {} of bank {}!",
         'statement_preparation': "Statement in preparation...",
         'no_withdrawal': "No withdrawals made yet.",
+        'no_transfer': "No transfers made yet.",
         'invalid_option': "Invalid option!",
         'choose_combination': "Choose the desired note combination: ",
         'printing_notes': "Printing, please wait for the notes to be counted and printed...",
         'withdrawal_value': "Withdrawal value: ",
+        'transfer_amount': "Please inform the amount to be transferred: ",
     },
     'portuguese': {
         'welcome': "Escolha o idioma: 1) Inglês ; 2) Português_BR",
@@ -39,16 +44,18 @@ messages = {
         'withdrawal_limit': "Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!",
         'insufficient_balance': "Saldo insuficiente para realizar o saque.",
         'available_notes': "NOTAS DISPONÍVEIS: R$ 10,00, R$ 20,00, R$ 50,00",
-        'menu': "MENU:\n1 - Depósito\n2 - Saque\n3 - Extrato\nEscolha uma opção: ",
+        'menu': "MENU:\n1 - Transferência\n2 - Saque\n3 - Extrato\nEscolha uma opção: ",
         'combination_options': "Combinações de notas disponíveis:",
         'success_withdrawal': "Saque realizado com sucesso!",
-        'success_deposit': "Depósito de R$ {:.2f} realizado com sucesso na conta {} da agência {} do banco {}!",
+        'success_transfer': "Transferência de R$ {:.2f} realizada com sucesso na conta {} da agência {} do banco {}!",
         'statement_preparation': "Extrato em preparação...",
         'no_withdrawal': "Nenhum saque realizado ainda.",
+        'no_transfer': "Nenhuma transferência realizada ainda.",
         'invalid_option': "Opção inválida!",
         'choose_combination': "Escolha a combinação de notas desejada: ",
         'printing_notes': "Imprimindo, aguarde as notas serem contabilizadas e impressas...",
         'withdrawal_value': "Valor do saque: ",
+        'transfer_amount': "Por favor, informe o valor a ser transferido: ",
     }
 }
 
@@ -136,8 +143,9 @@ def saque_dinheiro(lang):
     else:
         print(messages[lang]['invalid_option'])
 
-def depositar_dinheiro(lang):
-    global saldo
+def transferir_dinheiro(lang):
+    global saldo, valor_transferido, data_transferencia
+
     print("Please inform the bank name:")
     banco = input("Bank name: ")
     if not isinstance(banco, str):
@@ -156,18 +164,25 @@ def depositar_dinheiro(lang):
         print(messages[lang]['invalid_data'])
         return
 
-    print("Please inform the amount to be deposited:")
-    valor_depositado = input("Deposit amount: R$ ")
-    if not valor_depositado.replace(".", "").isdigit():
+    print(messages[lang]['transfer_amount'])
+    valor_transferido = input("Transfer amount: R$ ")
+    if not valor_transferido.replace(".", "").isdigit():
         print(messages[lang]['invalid_data'])
         return
 
-    valor_depositado = float(valor_depositado)
-    saldo += valor_depositado
-    print(messages[lang]['success_deposit'].format(valor_depositado, conta, agencia, banco))
+    valor_transferido = float(valor_transferido)
+
+    # Check if there is sufficient balance
+    if valor_transferido > saldo:
+        print(messages[lang]['insufficient_balance'])
+        return
+
+    saldo -= valor_transferido
+    print(messages[lang]['success_transfer'].format(valor_transferido, conta, agencia, banco))
+    data_transferencia = datetime.now(saopaulo_tz)
 
 def main():
-    global valor_sacado, saldo, data_saque
+    global valor_sacado, saldo, data_saque, valor_transferido, data_transferencia
 
     # Language selection
     print(messages['english']['welcome'])
@@ -187,17 +202,19 @@ def main():
         print(messages[lang]['menu'])
         opcao = input()
         if opcao == "1":
-            depositar_dinheiro(lang)
+            transferir_dinheiro(lang)
         elif opcao == "2":
             saque_dinheiro(lang)
         elif opcao == "3":
             print(messages[lang]['statement_preparation'])
             time.sleep(1)
             print(f"Current balance: R$ {saldo:.2f}")
+            if data_transferencia:
+                print(f"Transfer made on {data_transferencia.strftime('%m/%d/%Y %H:%M')} in the amount of R$ {valor_transferido:.2f}")
             if data_saque:
                 print(f"Withdrawal made on {data_saque.strftime('%m/%d/%Y %H:%M')} in the amount of R$ {valor_sacado:.2f}")
-            else:
-                print(messages[lang]['no_withdrawal'])
+            if not data_transferencia and not data_saque:
+                print(messages[lang]['no_transfer'])
         else:
             print(messages[lang]['invalid_option'])
 
