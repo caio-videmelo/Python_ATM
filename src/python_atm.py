@@ -2,21 +2,21 @@ import time
 from datetime import datetime
 import pytz
 
-# Variáveis globais
-saldo = 1000  # Saldo inicial do caixa eletrônico
-valor_sacado = 0  # Valor sacado no último saque
-valor_transferido = 0  # Valor transferido na última transferência
-data_saque = None  # Data e hora do último saque
-data_transferencia = None  # Data e hora da última transferência
-transacoes = []  # Lista para armazenar transações
-moeda = None  # Variável para armazenar a moeda selecionada
-simbolo_moeda = ''  # Símbolo da moeda
-notas_disponiveis = []  # Notas disponíveis para a moeda selecionada
+# Global variables
+saldo = 1000  # Initial ATM balance
+valor_sacado = 0  # Amount withdrawn in the last withdrawal
+valor_transferido = 0  # Amount transferred in the last transfer
+data_saque = None  # Date and time of the last withdrawal
+data_transferencia = None  # Date and time of the last transfer
+transacoes = []  # List to store transactions
+moeda = None  # Variable to store the selected currency
+simbolo_moeda = ''  # Currency symbol
+notas_disponiveis = []  # Available notes for the selected currency
 
-# Fuso horário de São Paulo
+# São Paulo time zone
 saopaulo_tz = pytz.timezone('America/Sao_Paulo')
 
-# Variáveis para mensagens em diferentes idiomas
+# Variables for messages in different languages
 messages = {
     'english': {
         'welcome': "Choose the language: 1) English ; 2) Portuguese_BR",
@@ -25,6 +25,7 @@ messages = {
         'invalid_data': "Invalid data, ending the operation.",
         'withdrawal_limit': "It's impossible to withdraw this amount from this ATM with the available notes!",
         'insufficient_balance': "Insufficient balance to perform the withdrawal.",
+        'available_balance': "Current balance: ",
         'available_notes': "AVAILABLE NOTES: ",
         'menu': "MENU:\n1 - Transfer\n2 - Withdrawal\n3 - Statement\nChoose an option: ",
         'combination_options': "Available note combinations:",
@@ -40,12 +41,14 @@ messages = {
         'transfer_amount': "Please inform the amount to be transferred: ",
         'select_currency': "Please select the desired currency: 1 - American Dollars (US$); 2 - Brazilian Real (R$); 3 - Euro (€); 4 - Pounds (£)",
         'currency_selected': "The currency chosen was ",
+        'info_message': "Python_ATM is a simulation software, for educational purposes only. All transactions are fictionary. In this simulation, you'll start with a current balance of 1000. The currency will be chosen by the user.",
     },
     'portuguese': {
         'welcome': "Escolha o idioma: 1) Inglês ; 2) Português_BR",
         'selected_english': "O usuário selecionou o idioma inglês.",
         'selected_portuguese': "O usuário selecionou Português_BR.",
         'invalid_data': "Dados inválidos, encerrando a operação.",
+        'available_balance': "Saldo disponível: ",
         'withdrawal_limit': "Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!",
         'insufficient_balance': "Saldo insuficiente para realizar o saque.",
         'available_notes': "NOTAS DISPONÍVEIS: ",
@@ -63,6 +66,7 @@ messages = {
         'transfer_amount': "Por favor, informe o valor a ser transferido: ",
         'select_currency': "Favor, escolher a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real (R$); 3 - Euro (€); 4 - Libras (£)",
         'currency_selected': "A moeda escolhida foi ",
+        'info_message': "Python_ATM é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. Nesta simulação, você iniciará com um saldo de 1000. A moeda será escolhida pelo usuário.",
     }
 }
 
@@ -75,14 +79,11 @@ currency_options = {
 
 def calcular_combinacoes(valor):
     combinacoes = []
-
     for quantidade_nota50 in range(0, valor // 50 + 1):
         for quantidade_nota20 in range(0, (valor - quantidade_nota50 * 50) // 20 + 1):
             quantidade_nota10 = (valor - (quantidade_nota50 * 50 + quantidade_nota20 * 20)) // 10
-            
             if (quantidade_nota50 * 50 + quantidade_nota20 * 20 + quantidade_nota10 * 10) == valor:
                 combinacoes.append((quantidade_nota50, quantidade_nota20, quantidade_nota10))
-
     combinacoes.sort(key=lambda x: x[0] + x[1] + x[2])
     return combinacoes[:3]
 
@@ -91,7 +92,7 @@ def saque_dinheiro(lang):
 
     # Prompt for withdrawal amount
     valor_saque = input(messages[lang]['withdrawal_value'])
-    
+
     # Validate input
     if not valor_saque.replace(".", "").isdigit():
         print(messages[lang]['invalid_data'])
@@ -125,13 +126,12 @@ def saque_dinheiro(lang):
     for i, (q50, q20, q10) in enumerate(combinacoes):
         partes = []
         if q50 > 0:
-            partes.append(f"{q50} note(s) of {simbolo_moeda} 50.00")
+            partes.append(f"{q50} nota(s) de {simbolo_moeda} 50.00" if lang == 'portuguese' else f"{q50} note(s) of {simbolo_moeda} 50.00")
         if q20 > 0:
-            partes.append(f"{q20} note(s) of {simbolo_moeda} 20.00")
+            partes.append(f"{q20} nota(s) de {simbolo_moeda} 20.00" if lang == 'portuguese' else f"{q20} note(s) of {simbolo_moeda} 20.00")
         if q10 > 0:
-            partes.append(f"{q10} note(s) of {simbolo_moeda} 10.00")
-
-        print(f"Option {i + 1}: {', '.join(partes)}")
+            partes.append(f"{q10} nota(s) de {simbolo_moeda} 10.00" if lang == 'portuguese' else f"{q10} note(s) of {simbolo_moeda} 10.00")
+        print(f"Opção {i + 1}: {', '.join(partes)}" if lang == 'portuguese' else f"Option {i + 1}: {', '.join(partes)}")
 
     try:
         escolha = int(input(messages[lang]['choose_combination'])) - 1
@@ -144,18 +144,18 @@ def saque_dinheiro(lang):
         time.sleep(1)
         q50, q20, q10 = combinacoes[escolha]
         if q50 > 0:
-            print(f"{q50} note(s) of {simbolo_moeda} 50.00")
+            print(f"{q50} nota(s) de {simbolo_moeda} 50.00" if lang == 'portuguese' else f"{q50} note(s) of {simbolo_moeda} 50.00")
         if q20 > 0:
-            print(f"{q20} note(s) of {simbolo_moeda} 20.00")
+            print(f"{q20} nota(s) de {simbolo_moeda} 20.00" if lang == 'portuguese' else f"{q20} note(s) of {simbolo_moeda} 20.00")
         if q10 > 0:
-            print(f"{q10} note(s) of {simbolo_moeda} 10.00")
+            print(f"{q10} nota(s) de {simbolo_moeda} 10.00" if lang == 'portuguese' else f"{q10} note(s) of {simbolo_moeda} 10.00")
         print(messages[lang]['success_withdrawal'])
         saldo -= valor_saque
         valor_sacado = valor_saque
         data_saque = datetime.now(saopaulo_tz)
     else:
         print(messages[lang]['invalid_option'])
-
+        
 def transferir_dinheiro(lang):
     global saldo, valor_transferido, data_transferencia, simbolo_moeda
 
@@ -196,8 +196,13 @@ def transferir_dinheiro(lang):
 
 def selecionar_moeda(lang):
     global moeda, simbolo_moeda, notas_disponiveis
+
     print(messages[lang]['select_currency'])
-    moeda_choice = input("Choose an option (1, 2, 3, or 4): ")
+    if lang == 'portuguese':
+        moeda_choice = input("Escolha uma opção (1, 2, 3, ou 4): ")
+    else:
+        moeda_choice = input("Choose an option (1, 2, 3, or 4): ")
+
     if moeda_choice in currency_options:
         moeda = currency_options[moeda_choice][lang]
         simbolo_moeda = currency_options[moeda_choice]['symbol']
@@ -213,6 +218,7 @@ def main():
     # Language selection
     print(messages['english']['welcome'])
     language_choice = input("Choose an option (1 or 2): ")
+
     if language_choice == '1':
         lang = 'english'
         print(messages['english']['selected_english'])
@@ -223,13 +229,18 @@ def main():
         print("Invalid selection, defaulting to English.")
         lang = 'english'
 
+    # Display the info message
+    print(messages[lang]['info_message'])
+
     # Currency selection
     selecionar_moeda(lang)
 
     print(f"{messages[lang]['available_notes']} {', '.join([f'{simbolo_moeda} {note}.00' for note in notas_disponiveis])}")
+
     while True:
         print(messages[lang]['menu'])
         opcao = input()
+
         if opcao == "1":
             transferir_dinheiro(lang)
         elif opcao == "2":
@@ -237,13 +248,16 @@ def main():
         elif opcao == "3":
             print(messages[lang]['statement_preparation'])
             time.sleep(1)
-            print(f"Current balance: {simbolo_moeda} {saldo:.2f}")
+            print(f"{messages[lang]['available_balance']} {simbolo_moeda} {saldo:.2f}")
             if data_transferencia:
-                print(f"Transfer made on {data_transferencia.strftime('%m/%d/%Y %H:%M')} in the amount of {simbolo_moeda} {valor_transferido:.2f}")
+                print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco))
             if data_saque:
-                print(f"Withdrawal made on {data_saque.strftime('%m/%d/%Y %H:%M')} in the amount of {simbolo_moeda} {valor_sacado:.2f}")
+                if lang == 'english':
+                    print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} on {data_saque.strftime('%m/%d/%Y %H:%M')}")
+                else:
+                    print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} em {data_saque.strftime('%d/%m/%Y %H:%M')}")
             if not data_transferencia and not data_saque:
-                print(messages[lang]['no_transfer'])
+                print(messages[lang]['no_withdrawal'])
         else:
             print(messages[lang]['invalid_option'])
 
