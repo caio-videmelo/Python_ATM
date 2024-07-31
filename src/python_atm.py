@@ -41,32 +41,46 @@ messages = {
         'transfer_amount': "Please inform the amount to be transferred: ",
         'select_currency': "Please select the desired currency: 1 - American Dollars (US$); 2 - Brazilian Real (R$); 3 - Euro (€); 4 - Pounds (£)",
         'currency_selected': "The currency chosen was ",
-        'info_message': "Python_ATM is a simulation software, for educational purposes only. All transactions are fictionary. In this simulation, you'll start with a current balance of 1000. The currency will be chosen by the user.",
+        'info_message': "Python_ATM is a simulation software, for educational purposes only. All transactions are fictitious. In this simulation, you'll start with a current balance of 1000 and the ATM has a withdrawal limit of 600. The currency will be chosen by the user.",
+        'provide_data': "Please provide the required data.",
+        'invalid_data': "Invalid data provided.",
+        'account_number': "Please inform the account number to be credited:",  # Adicionada chave para account number
+        'agency_number': "Please inform the agency number:",  # Adicionada chave para agency number
+        'insufficient_balance': "Insufficient balance.",
+        'success_transfer': "Transfer of {}{} to account {} at agency {} in bank {} was successful."
     },
     'portuguese': {
-        'welcome': "Escolha o idioma: 1) Inglês ; 2) Português_BR",
-        'selected_english': "O usuário selecionou o idioma inglês.",
-        'selected_portuguese': "O usuário selecionou Português_BR.",
-        'invalid_data': "Dados inválidos, encerrando a operação.",
-        'available_balance': "Saldo disponível: ",
-        'withdrawal_limit': "Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!",
-        'insufficient_balance': "Saldo insuficiente para realizar o saque.",
-        'available_notes': "NOTAS DISPONÍVEIS: ",
-        'menu': "MENU:\n1 - Transferência\n2 - Saque\n3 - Extrato\nEscolha uma opção: ",
-        'combination_options': "Combinações de notas disponíveis:",
-        'success_withdrawal': "Saque realizado com sucesso!",
-        'success_transfer': "Transferência de {} {:.2f} realizada com sucesso na conta {} da agência {} do banco {}!",
-        'statement_preparation': "Extrato em preparação...",
-        'no_withdrawal': "Nenhum saque realizado ainda.",
-        'no_transfer': "Nenhuma transferência realizada ainda.",
-        'invalid_option': "Opção inválida!",
-        'choose_combination': "Escolha a combinação de notas desejada: ",
-        'printing_notes': "Imprimindo, aguarde as notas serem contabilizadas e impressas...",
-        'withdrawal_value': "Valor do saque: ",
-        'transfer_amount': "Por favor, informe o valor a ser transferido: ",
-        'select_currency': "Favor, escolher a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real (R$); 3 - Euro (€); 4 - Libras (£)",
-        'currency_selected': "A moeda escolhida foi ",
-        'info_message': "Python_ATM é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. Nesta simulação, você iniciará com um saldo de 1000. A moeda será escolhida pelo usuário.",
+    'welcome': "Escolha o idioma: 1) Inglês ; 2) Português_BR",
+    'selected_english': "O usuário selecionou o idioma inglês.",
+    'selected_portuguese': "O usuário selecionou Português_BR.",
+    'invalid_data': "Dados inválidos, encerrando a operação.",
+    'available_balance': "Saldo disponível: ",
+    'withdrawal_limit': "Impossível sacar esse valor nesse caixa eletrônico com as notas disponíveis!",
+    'insufficient_balance': "Saldo insuficiente para realizar o saque.",
+    'available_notes': "NOTAS DISPONÍVEIS: ",
+    'menu': "MENU:\n1 - Transferência\n2 - Saque\n3 - Extrato\nEscolha uma opção: ",
+    'combination_options': "Combinações de notas disponíveis:",
+    'success_withdrawal': "Saque realizado com sucesso!",
+    'success_transfer': "Transferência de {} {:.2f} realizada com sucesso na conta {} da agência {} do banco {}!",
+    'statement_preparation': "Extrato em preparação...",
+    'no_withdrawal': "Nenhum saque realizado ainda.",
+    'no_transfer': "Nenhuma transferência realizada ainda.",
+    'invalid_option': "Opção inválida!",
+    'choose_combination': "Escolha a combinação de notas desejada: ",
+    'printing_notes': "Imprimindo, aguarde as notas serem contabilizadas e impressas...",
+    'withdrawal_value': "Valor do saque: ",
+    'transfer_amount': "Por favor, informe o valor a ser transferido: ",
+    'select_currency': "Favor, escolher a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real (R$); 3 - Euro (€); 4 - Libras (£)",
+    'currency_selected': "A moeda escolhida foi ",
+    'info_message': "Python_ATM é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. Nesta simulação, você iniciará com um saldo de 1000 e o Caixa possui um limite de 600 para saque. A moeda será escolhida pelo usuário.",
+    'bank_name': "Por favor, informe o nome do banco:",
+    'account_number': "Por favor, informe o número da conta a ser creditada:",
+    'agency_number': "Por favor, informe o número da agência:",
+    'success_transfer': "Transferência de {}{} para a conta {} na agência {} do banco {} foi realizada com sucesso.",
+    'provide_data': "Favor, forneça as informações necessárias.",  # Adicionada vírgula aqui
+    'invalid_data': "Dados inválidos fornecidos.",
+    'transfer_amount': "Por favor, informe o valor da transferência:",
+    'insufficient_balance': "Saldo insuficiente."
     }
 }
 
@@ -157,35 +171,41 @@ def saque_dinheiro(lang):
         print(messages[lang]['invalid_option'])
         
 def transferir_dinheiro(lang):
-    global saldo, valor_transferido, data_transferencia, simbolo_moeda
+    global saldo, valor_transferido, data_transferencia, simbolo_moeda, conta, agencia, banco
+    
+    print(messages[lang]['provide_data'])
 
-    print("Please inform the bank name:")
-    banco = input("Bank name: ")
+    # Solicitar o nome do banco
+    print("Please inform the bank name:" if lang == 'english' else "Por favor, informe o nome do banco:")
+    banco = input("Bank name: ") if lang == 'english' else input("Nome do banco: ")
     if not isinstance(banco, str):
         print(messages[lang]['invalid_data'])
         return
 
-    print("Please inform the account number to be credited:")
-    conta = input("Account number: ")
+    # Solicitar o número da conta
+    print(messages[lang]['account_number'])
+    conta = input("Account number: ") if lang == 'english' else input("Número da conta: ")
     if not conta.isdigit():
         print(messages[lang]['invalid_data'])
         return
 
-    print("Please inform the agency number:")
-    agencia = input("Agency number: ")
+    # Solicitar o número da agência
+    print(messages[lang]['agency_number'])
+    agencia = input("Agency number: ") if lang == 'english' else input("Número da agência: ")
     if not agencia.isdigit():
         print(messages[lang]['invalid_data'])
         return
 
+    # Solicitar o valor da transferência
     print(messages[lang]['transfer_amount'])
-    valor_transferido = input(f"Transfer amount ({simbolo_moeda}): ")
+    valor_transferido = input(f"Transfer amount ({simbolo_moeda}): ") if lang == 'english' else input(f"Valor da transferência ({simbolo_moeda}): ")
     if not valor_transferido.replace(".", "").isdigit():
         print(messages[lang]['invalid_data'])
         return
 
     valor_transferido = float(valor_transferido)
 
-    # Check if there is sufficient balance
+    # Verifica se há saldo suficiente
     if valor_transferido > saldo:
         print(messages[lang]['insufficient_balance'])
         return
@@ -218,7 +238,6 @@ def main():
     # Language selection
     print(messages['english']['welcome'])
     language_choice = input("Choose an option (1 or 2): ")
-
     if language_choice == '1':
         lang = 'english'
         print(messages['english']['selected_english'])
@@ -234,13 +253,11 @@ def main():
 
     # Currency selection
     selecionar_moeda(lang)
-
     print(f"{messages[lang]['available_notes']} {', '.join([f'{simbolo_moeda} {note}.00' for note in notas_disponiveis])}")
 
     while True:
         print(messages[lang]['menu'])
         opcao = input()
-
         if opcao == "1":
             transferir_dinheiro(lang)
         elif opcao == "2":
@@ -249,13 +266,21 @@ def main():
             print(messages[lang]['statement_preparation'])
             time.sleep(1)
             print(f"{messages[lang]['available_balance']} {simbolo_moeda} {saldo:.2f}")
+            
             if data_transferencia:
-                print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco))
+                if lang == 'english':
+                    print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco) + 
+                          f" on {data_transferencia.strftime('%m/%d/%Y %H:%M')}")
+                else:
+                    print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco) + 
+                          f" em {data_transferencia.strftime('%d/%m/%Y %H:%M')}")
+            
             if data_saque:
                 if lang == 'english':
                     print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} on {data_saque.strftime('%m/%d/%Y %H:%M')}")
                 else:
                     print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} em {data_saque.strftime('%d/%m/%Y %H:%M')}")
+            
             if not data_transferencia and not data_saque:
                 print(messages[lang]['no_withdrawal'])
         else:
