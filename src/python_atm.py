@@ -363,6 +363,8 @@ def main():
             
             if not data_transferencia and not data_saque:
                 print(messages[lang]['no_withdrawal'])
+        elif option == "4":
+            create_bank_account(lang)
         elif option == "0":  # Exit option
             print(messages[lang]['goodbye'])
             break  # Exit the loop
