@@ -42,7 +42,7 @@ messages = {
         'transfer_amount': "Please inform the amount to be transferred: ",
         'select_currency': "Please select the desired currency: 1 - American Dollars (US$); 2 - Brazilian Real (R$); 3 - Euro (€); 4 - Pounds (£)",
         'currency_selected': "The currency chosen was ",
-        'info_message': "Python_ATM is a simulation software, for educational purposes only. All transactions are fictitious. In this simulation, you'll start with a current balance of 1000 and the ATM has a withdrawal limit of 600. The currency will be chosen by the user.",
+        'info_message': "PYBank is a simulation software, for educational purposes only. All transactions are fictitious. In this simulation, you'll start with a current balance of 1000 and the ATM has a withdrawal limit of 600. The currency will be chosen by the user.",
         'provide_data': "Please provide the required data.",
         'invalid_data': "Invalid data provided.",
         'account_number': "Please inform the account number to be credited:",  # Adicionada chave para account number
@@ -73,7 +73,7 @@ messages = {
     'transfer_amount': "Por favor, informe o valor a ser transferido: ",
     'select_currency': "Favor, escolher a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real (R$); 3 - Euro (€); 4 - Libras (£)",
     'currency_selected': "A moeda escolhida foi ",
-    'info_message': "Python_ATM é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. Nesta simulação, você iniciará com um saldo de 1000 e o Caixa possui um limite de 600 para saque. A moeda será escolhida pelo usuário.",
+    'info_message': "PYBank é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. Nesta simulação, você iniciará com um saldo de 1000 e o Caixa possui um limite de 600 para saque. A moeda será escolhida pelo usuário.",
     'bank_name': "Por favor, informe o nome do banco:",
     'account_number': "Por favor, informe o número da conta a ser creditada:",
     'agency_number': "Por favor, informe o número da agência:",
@@ -216,23 +216,38 @@ def transferir_dinheiro(lang):
     print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco))
     data_transferencia = datetime.now(saopaulo_tz)
 
-def selecionar_moeda(lang):
-    global moeda, simbolo_moeda, notas_disponiveis
-
-    print(messages[lang]['select_currency'])
-    if lang == 'portuguese':
-        moeda_choice = input("Escolha uma opção (1, 2, 3, ou 4): ")
+def select_currency(lang):
+    global currency_symbol, available_notes
+    
+    if lang == 'english':
+        print("\nSelect Currency:")
+        print("1) American Dollars (US$)")
+        print("2) Brazilian Real (R$)")
+        print("3) Euro (€)")
+        print("4) Pounds (£)")
     else:
-        moeda_choice = input("Choose an option (1, 2, 3, or 4): ")
-
-    if moeda_choice in currency_options:
-        moeda = currency_options[moeda_choice][lang]
-        simbolo_moeda = currency_options[moeda_choice]['symbol']
-        notas_disponiveis = currency_options[moeda_choice]['notes']
-        print(messages[lang]['currency_selected'] + moeda)
+        print("\nSelecione a moeda:")
+        print("1) Dólares Americanos (US$)")
+        print("2) Real (R$)")
+        print("3) Euro (€)")
+        print("4) Libras (£)")
+    
+    currency_choice = input("Choose an option (1-4): " if lang == 'english' else "Escolha uma opção (1-4): ")
+    
+    currency_options = {
+        '1': {'english': 'American Dollars (US$)', 'portuguese': 'Dólares Americanos (US$)', 'symbol': 'US$', 'notes': [50, 20, 10]},
+        '2': {'english': 'Brazilian Real (R$)', 'portuguese': 'Real (R$)', 'symbol': 'R$', 'notes': [50, 20, 10]},
+        '3': {'english': 'Euro (€)', 'portuguese': 'Euro (€)', 'symbol': '€', 'notes': [50, 20, 10]},
+        '4': {'english': 'Pounds (£)', 'portuguese': 'Libras (£)', 'symbol': '£', 'notes': [50, 20, 10]}
+    }
+    
+    if currency_choice in currency_options:
+        currency_symbol = currency_options[currency_choice]['symbol']
+        available_notes = currency_options[currency_choice]['notes']
+        print(f"Moeda selecionada: {currency_options[currency_choice][lang]}")  # Mensagem localizada
     else:
-        print(messages[lang]['invalid_option'])
-        selecionar_moeda(lang)
+        print("Invalid option. Please select a valid currency." if lang == 'english' else "Opção inválida. Por favor, selecione uma moeda válida.")
+        select_currency(lang)
         
 class Client:
     def __init__(self, name, client_id, date_of_birth, home_address):
@@ -304,7 +319,8 @@ def create_bank_account(lang):
     return account
 
 def main():
-    print("Welcome to PYBank!")
+    # Mensagem introdutória
+    print("Welcome to PYBank! / Bem-vindo(a) ao PYBank!")
 
     # Seleção de idioma
     print("Choose your language: 1) English ; 2) Portuguese_BR")
@@ -313,12 +329,21 @@ def main():
     if language_choice == '1':
         lang = 'english'
         print("You have selected English.")
+        print("PYBank is a simulation software, for educational purposes only. All transactions are fictitious. "
+          "In this simulation, you'll start with a current balance of 1000 and the ATM has a withdrawal limit of 600. "
+          "The currency will be chosen by the user.")
+          
     elif language_choice == '2':
         lang = 'portuguese'
         print("Você selecionou Português.")
+        print("PYBank é um software de simulação, para fins educacionais somente. Todas as transações são fictícias. "
+          "Nesta simulação, você iniciará com um saldo de 1000 e o Caixa possui um limite de 600 para saque. "
+          "A moeda será escolhida pelo usuário.")
     else:
         print("Invalid selection, defaulting to English.")
         lang = 'english'
+
+    select_currency(lang)
 
     while True:
         if lang == 'english':
@@ -339,37 +364,37 @@ def main():
         option = input("Choose an option (0-4): " if lang == 'english' else "Escolha uma opção (0-4): ")
 
         if option == "1":
-            transferir_dinheiro(lang)
+                transferir_dinheiro(lang)
         elif option == "2":
-            saque_dinheiro(lang)
+                saque_dinheiro(lang)
         elif option == "3":
-            print(messages[lang]['statement_preparation'])
-            time.sleep(1)
-            print(f"{messages[lang]['available_balance']} {simbolo_moeda} {saldo:.2f}")
+                print(messages[lang]['statement_preparation'])
+                time.sleep(1)
+                print(f"{messages[lang]['available_balance']} {simbolo_moeda} {saldo:.2f}")
             
-            if data_transferencia:
+        if data_transferencia:
                 if lang == 'english':
                     print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco) + 
-                          f" on {data_transferencia.strftime('%m/%d/%Y %H:%M')}")
+                        f" on {data_transferencia.strftime('%m/%d/%Y %H:%M')}")
                 else:
                     print(messages[lang]['success_transfer'].format(simbolo_moeda, valor_transferido, conta, agencia, banco) + 
-                          f" em {data_transferencia.strftime('%d/%m/%Y %H:%M')}")
+                        f" em {data_transferencia.strftime('%d/%m/%Y %H:%M')}")
             
-            if data_saque:
+        if data_saque:
                 if lang == 'english':
                     print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} on {data_saque.strftime('%m/%d/%Y %H:%M')}")
                 else:
                     print(f"{messages[lang]['withdrawal_value']}{simbolo_moeda} {valor_sacado:.2f} em {data_saque.strftime('%d/%m/%Y %H:%M')}")
             
-            if not data_transferencia and not data_saque:
+        if not data_transferencia and not data_saque:
                 print(messages[lang]['no_withdrawal'])
         elif option == "4":
-            create_bank_account(lang)
+                create_bank_account(lang)
         elif option == "0":  # Exit option
-            print(messages[lang]['goodbye'])
-            break  # Exit the loop
+                print(messages[lang]['goodbye'])
+                break  # Exit the loop
         else:
-            print("Invalid option, please try again." if lang == 'english' else "Opção inválida, por favor tente novamente.")
+                print("Invalid option, please try again." if lang == 'english' else "Opção inválida, por favor tente novamente.")
 
 if __name__ == "__main__":
     main()
