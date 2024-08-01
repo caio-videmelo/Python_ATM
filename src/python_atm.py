@@ -242,7 +242,8 @@ class Client:
         self.home_address = home_address
 
     def __str__(self):
-        return f"Client(Name: {self.name}, CPF: {self.client_id}, DOB: {self.date_of_birth}, Address: {self.home_address})"
+        return (f"Cliente(Nome: {self.name}, CPF: {self.client_id}, "
+                f"Data de Nascimento: {self.date_of_birth}, Endereço: {self.home_address})")
 
 
 class BankAccount:
@@ -252,16 +253,9 @@ class BankAccount:
 
     def __init__(self, client):
         self.account_number = f"{BankAccount.account_counter:04d}"  # Formatar número da conta com zeros à esquerda
-        self.balance = 0.0  # Saldo inicial
+        self.balance = 1000.0  # Saldo inicial
         self.client = client  # Associar a conta com um cliente
         BankAccount.account_counter += 1  # Incrementar o contador de contas para a próxima conta
-
-    def deposit(self, amount):
-        if amount > 0:
-            self.balance += amount
-            print(f"Deposited {amount:.2f}. New balance: {self.balance:.2f}")
-        else:
-            print("Deposit amount must be positive.")
 
     def withdraw(self, amount):
         if 0 < amount <= self.balance:
@@ -274,8 +268,11 @@ class BankAccount:
         return self.balance
 
     def __str__(self):
-        return (f"BankAccount(Account Number: {self.account_number}, Agency Number: {self.agency_number}, "
-                f"Bank: {self.bank_name}, Balance: {self.balance:.2f}, Client: {self.client})")
+        return (f"Conta Bancária(Número da Conta: {self.account_number}, "
+                f"Número da Agência: {self.agency_number}, "
+                f"Banco: {self.bank_name}, "
+                f"Saldo: {self.balance:.2f}, "
+                f"{self.client})")
 
 
 def create_bank_account(lang):
@@ -285,7 +282,7 @@ def create_bank_account(lang):
         print("Para criar uma nova conta bancária, por favor forneça:")
 
     name = input("Enter your name: " if lang == 'english' else "Digite seu nome: ")
-    client_id = input("Enter your ID (CPF): " if lang == 'english' else "Digite seu CPF: ")  # Mensagem alterada
+    client_id = input("Enter your ID: " if lang == 'english' else "Digite seu CPF: ")  # Mensagem alterada
     date_of_birth = input(
         "Enter your date of birth (MM/DD/YYYY): " if lang == 'english' else "Digite sua data de nascimento (DD/MM/YYYY): "
     )
@@ -297,11 +294,14 @@ def create_bank_account(lang):
     # Criar uma nova conta bancária para o cliente
     account = BankAccount(client)
 
-    print("\nBank account created successfully!")
+    if lang == 'english':
+        print("\nBank account created successfully!")
+    else:
+        print("\nConta bancária criada com sucesso!")
+
     print(account)
 
     return account
-
 
 def main():
     print("Welcome to PYBank!")
