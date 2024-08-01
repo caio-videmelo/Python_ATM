@@ -233,41 +233,116 @@ def selecionar_moeda(lang):
     else:
         print(messages[lang]['invalid_option'])
         selecionar_moeda(lang)
+        
+class Client:
+    def __init__(self, name, client_id, date_of_birth, home_address):
+        self.name = name
+        self.client_id = client_id  # Este será o CPF
+        self.date_of_birth = date_of_birth
+        self.home_address = home_address
+
+    def __str__(self):
+        return f"Client(Name: {self.name}, CPF: {self.client_id}, DOB: {self.date_of_birth}, Address: {self.home_address})"
+
+
+class BankAccount:
+    account_counter = 1  # Variável de classe para rastrear os números das contas
+    agency_number = "0001"  # Número de agência fixo para simplicidade
+    bank_name = "PYBank"  # Nome do banco
+
+    def __init__(self, client):
+        self.account_number = f"{BankAccount.account_counter:04d}"  # Formatar número da conta com zeros à esquerda
+        self.balance = 0.0  # Saldo inicial
+        self.client = client  # Associar a conta com um cliente
+        BankAccount.account_counter += 1  # Incrementar o contador de contas para a próxima conta
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Deposited {amount:.2f}. New balance: {self.balance:.2f}")
+        else:
+            print("Deposit amount must be positive.")
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.balance:
+            self.balance -= amount
+            print(f"Withdrew {amount:.2f}. New balance: {self.balance:.2f}")
+        else:
+            print("Insufficient funds or invalid amount.")
+
+    def get_balance(self):
+        return self.balance
+
+    def __str__(self):
+        return (f"BankAccount(Account Number: {self.account_number}, Agency Number: {self.agency_number}, "
+                f"Bank: {self.bank_name}, Balance: {self.balance:.2f}, Client: {self.client})")
+
+
+def create_bank_account(lang):
+    if lang == 'english':
+        print("To create a new bank account, please provide:")
+    else:
+        print("Para criar uma nova conta bancária, por favor forneça:")
+
+    name = input("Enter your name: " if lang == 'english' else "Digite seu nome: ")
+    client_id = input("Enter your ID (CPF): " if lang == 'english' else "Digite seu CPF: ")  # Mensagem alterada
+    date_of_birth = input(
+        "Enter your date of birth (MM/DD/YYYY): " if lang == 'english' else "Digite sua data de nascimento (DD/MM/YYYY): "
+    )
+    home_address = input("Enter your home address: " if lang == 'english' else "Digite seu endereço: ")
+
+    # Criar um novo cliente
+    client = Client(name, client_id, date_of_birth, home_address)
+
+    # Criar uma nova conta bancária para o cliente
+    account = BankAccount(client)
+
+    print("\nBank account created successfully!")
+    print(account)
+
+    return account
+
 
 def main():
-    global valor_sacado, saldo, data_saque, valor_transferido, data_transferencia, moeda, simbolo_moeda, notas_disponiveis
-    clientes = []
-    contas = []
+    print("Welcome to PYBank!")
 
-    # Language selection
-    print(messages['english']['welcome'])
+    # Seleção de idioma
+    print("Choose your language: 1) English ; 2) Portuguese_BR")
     language_choice = input("Choose an option (1 or 2): ")
+    
     if language_choice == '1':
         lang = 'english'
-        print(messages['english']['selected_english'])
+        print("You have selected English.")
     elif language_choice == '2':
         lang = 'portuguese'
-        print(messages['portuguese']['selected_portuguese'])
+        print("Você selecionou Português.")
     else:
         print("Invalid selection, defaulting to English.")
         lang = 'english'
 
-    # Display the info message
-    print(messages[lang]['info_message'])
-
-    # Currency selection
-    selecionar_moeda(lang)
-    print(f"{messages[lang]['available_notes']} {', '.join([f'{simbolo_moeda} {note}.00' for note in notas_disponiveis])}")
-
     while True:
-        print(messages[lang]['menu'])
-        opcao = input()
-        
-        if opcao == "1":
+        if lang == 'english':
+            print("\nMain Menu:")
+            print("1) Transfer Money")
+            print("2) Withdraw Money")
+            print("3) Statement")
+            print("4) Create Account")
+            print("0) Exit")
+        else:
+            print("\nMenu Principal:")
+            print("1) Transferir Dinheiro")
+            print("2) Sacar Dinheiro")
+            print("3) Extrato")
+            print("4) Criar Conta")
+            print("0) Sair")
+
+        option = input("Choose an option (0-4): " if lang == 'english' else "Escolha uma opção (0-4): ")
+
+        if option == "1":
             transferir_dinheiro(lang)
-        elif opcao == "2":
+        elif option == "2":
             saque_dinheiro(lang)
-        elif opcao == "3":
+        elif option == "3":
             print(messages[lang]['statement_preparation'])
             time.sleep(1)
             print(f"{messages[lang]['available_balance']} {simbolo_moeda} {saldo:.2f}")
@@ -288,11 +363,11 @@ def main():
             
             if not data_transferencia and not data_saque:
                 print(messages[lang]['no_withdrawal'])
-        elif opcao == "0":  # Exit option
+        elif option == "0":  # Exit option
             print(messages[lang]['goodbye'])
             break  # Exit the loop
         else:
-            print(messages[lang]['invalid_option'])
+            print("Invalid option, please try again." if lang == 'english' else "Opção inválida, por favor tente novamente.")
 
 if __name__ == "__main__":
     main()
