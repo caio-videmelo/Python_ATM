@@ -1,6 +1,6 @@
-# Simulador de Caixa Eletrônico
+# PYBank: Simulador de Caixa Eletrônico
 
-Este repositório contém um simulador de caixa eletrônico baseado em Python. O simulador permite que os usuários realizem operações básicas de caixa eletrônico, como seleção de idioma, seleção de moeda, transferência de dinheiro, saque de dinheiro e visualização de extratos. Ele suporta vários idiomas (Inglês e Português Brasileiro) e várias moedas (Dólares Americanos, Real Brasileiro, Euro e Libras Esterlinas).
+Este repositório contém um simulador de caixa eletrônico baseado em Python. O simulador permite que os usuários realizem operações básicas de caixa eletrônico, como seleção de idioma, seleção de moeda, transferência de dinheiro, saque de dinheiro, visualização de extratos e criação de conta bancária. Ele suporta dois idiomas (Inglês e Português Brasileiro) e várias moedas (Dólares Americanos, Real Brasileiro, Euro e Libras Esterlinas).
 
 ## Recursos
 
@@ -14,15 +14,55 @@ Combinações de notas para saques, garantindo denominações válidas de notas.
 
 Mensagens e confirmações amigáveis ao usuário.
 
+Criação de Conta: Os usuários podem criar novas contas bancárias fornecendo suas informações pessoais, como nome, ID (CPF), data de nascimento e endereço.
+
+Detalhes da Conta: Cada conta bancária exibe o número da conta, número da agência, notas disponíveis, saldo atual e as informações do cliente associado.
+
+## Classe Client
+
+A classe Client representa um cliente individual e armazena suas informações pessoais. Ela possui os seguintes atributos:
+
+  name: O nome do cliente.
+
+  client_id: O ID (CPF) do cliente.
+
+  date_of_birth: A data de nascimento do cliente.
+
+  home_address: O endereço do cliente.
+
+A classe também inclui um método __str__ que retorna uma representação em string das informações do cliente.
+
+## Classe BankAccount
+
+A classe BankAccount representa uma conta bancária e gerencia os detalhes da conta. Ela possui os seguintes atributos:
+
+  account_number: Um número de conta único gerado automaticamente.
+
+  balance: O saldo atual da conta, inicialmente definido como 1000.
+
+  client: O cliente associado à conta.
+
+  currency_symbol: O símbolo da moeda selecionada.
+
+  available_notes: As denominações disponíveis para a moeda selecionada.
+
+A classe inclui os seguintes métodos:
+
+  withdraw(amount): Subtrai o valor especificado do saldo da conta, se houver fundos suficientes.
+  
+  get_balance(): Retorna o saldo atual da conta.
+
+__str__: Retorna uma representação em string dos detalhes da conta, incluindo o número da conta, número da agência, nome do banco, moeda, notas disponíveis, saldo e as informações do cliente associado.
+
 ## Como Usar
 
-### Passo 1: Seleção de Idioma
+### Seleção de Idioma
 
 Prompt: "Escolha o idioma: 1) Inglês ; 2) Português_BR"
 
 Entrada do Usuário: Digite 1 para Inglês ou 2 para Português_BR.
 
-### Passo 2: Seleção de Moeda
+### Seleção de Moeda
 
 Prompt: "Por favor, selecione a moeda desejada: 1 - Dólares Americanos (US$); 2 - Real Brasileiro (R$); 3 - Euro (€); 4 - Libras (£)"
 
@@ -30,7 +70,7 @@ Entrada do Usuário: Digite 1, 2, 3 ou 4 com base na moeda desejada.
 
 Confirmação: O aplicativo confirmará a moeda selecionada, por exemplo, "A moeda escolhida foi Dólares Americanos (US$)".
 
-### Passo 3: Menu Principal
+### Menu Principal
 
 Uma vez que a moeda é selecionada, o usuário verá o menu principal. Aqui, o usuário pode escolher transferir dinheiro, sacar dinheiro ou visualizar o extrato do usuário.
 
@@ -38,7 +78,7 @@ Prompt: "MENU:\n1 - Transferência\n2 - Saque\n3 - Extrato\nEscolha uma opção:
 
 Entrada do Usuário: Digite 1, 2 ou 3 com base na operação desejada.
 
-### Passo 4: Transferir Dinheiro
+### Transferir Dinheiro
 
 Prompts:
 
@@ -54,7 +94,7 @@ Entrada do Usuário: Forneça os detalhes e o valor da transferência.
 
 Confirmação: O aplicativo confirmará a transferência bem-sucedida e atualizará seu saldo.
 
-### Passo 5: Sacar Dinheiro
+### Sacar Dinheiro
 
 Prompt: "Valor do saque:"
 
@@ -62,13 +102,17 @@ Entrada do Usuário: Digite o valor desejado para saque (deve ser múltiplo de 1
 
 Confirmação: O aplicativo imprimirá as notas e atualizará o saldo do usuário.
 
-### Passo 6: Visualizar Extrato
+### Visualizar Extrato
 
 Prompt: "Extrato em preparação..."
 
 Saída: O aplicativo mostrará o saldo atual do usuário e as transferências e saques recentes.
 
-### Passo 7: Tratamento de Entrada Inválida
+### Criação de conta bancária
+
+A função create_bank_account lida com a criação de uma nova conta bancária. Ela solicita que o usuário forneça suas informações pessoais, cria uma instância de Client e, em seguida, cria uma instância de BankAccount associada ao cliente. A função também seleciona a moeda para a conta e exibe uma mensagem de confirmação após a criação bem-sucedida da conta.
+
+### Tratamento de Entrada Inválida
 
 Se o usuário fornecer uma entrada inválida em qualquer etapa, o aplicativo notificará o usuário e solicitará que ele/ela/elu tente novamente.
 
